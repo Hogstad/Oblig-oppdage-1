@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Oblig</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script src="lib.js"></script>
+    <script>
+        QUnit.test("valid Date", function (assert) {
+            const actual = isDateValid('01.10.2020');
+            const expected = true;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("valid Lenght", function (assert) {
+            const actual = isLength('01.10.20204');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Point in position 3", function (assert) {
+            const actual = thirdAndSixth('01410.2020');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Point in position 6", function (assert) {
+            const actual = thirdAndSixth('01.1042020');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("The year does not consist of four digits", function (assert) {
+            const actual = isYear('12345');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Month does not consist of two digits", function (assert) {
+            const actual = isMonth('123');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Month is outside 1-12", function (assert) {
+            const actual = isMonth('13');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Day is greater than 31", function (assert) {
+            const actual = isDay('55','12','2999');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Day is 31 for a month that does not have 31 days", function (assert) {
+            const actual = isDay('31','04','2999');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Day is 30 and month is february", function (assert) {
+            const actual = isDay('30.02.2999');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Day is February 29 and it is not leap year", function (assert) {
+            const actual = isDay('29.02.2999');
+            const expected = false;
+            assert.equal(actual, expected);
+        });
+        QUnit.test("Day is february 29 and it is leap year", function (assert) {
+            const actual = isDay('29.02.2020');
+            const expected = true;
+            assert.equal(actual, expected);
+        });
+    </script>
+</body>
+</html>
